@@ -35,9 +35,9 @@ const Footer = () => {
         <div>
           <h4 className="text-lg font-semibold mb-4 text-yellow-400">Contact Us</h4>
           <ul className="space-y-2 text-blue-100">
-            <li>Email: info@sunandsonsfoods.com</li>
-            <li>Phone: +91 98765 43210</li>
-            <li>Address: Pune, Maharashtra, India</li>
+            <li>Email: sunandsonsfoods@gmail.com</li>
+            <li>Phone: +91 78798 67530</li>
+            <li>Address: Dawa Bazar, Indore, India</li>
           </ul>
         </div>
 
@@ -47,8 +47,6 @@ const Footer = () => {
           <div className="flex gap-4 text-2xl">
             <a href="#" className="hover:text-yellow-400 transition"><FaInstagram /></a>
             <a href="#" className="hover:text-yellow-400 transition"><FaFacebook /></a>
-            <a href="#" className="hover:text-yellow-400 transition"><FaLinkedin /></a>
-            <a href="#" className="hover:text-yellow-400 transition"><FaWhatsapp /></a>
           </div>
         </div>
 

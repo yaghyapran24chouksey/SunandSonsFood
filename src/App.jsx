@@ -5,19 +5,17 @@ import BlogPage from "./components/BlogPage";
 import Contact from "./components/contact-Us";
 import Hero from "./components/herosection";
 import Navbar from "./components/navbar";
-import ProductCarousel from "./components/ProductCarousel";
 import TestimonialSection from "./components/testimonial";
-
+import Numbers from "./components/numbers";
 import Careers from "./components/careers";
 import B2BPage from "./components/B2B";
+import ProductCarousel from "./components/productCarousel";
 
 function App() {
   return (
     <>
       <Navbar />
-
       <Routes>
-
         {/* HOME PAGE */}
         <Route
           path="/"
@@ -25,19 +23,20 @@ function App() {
             <>
               <Hero />
               <About />
+              <div className="min-h-screen bg-gradient-to-b from-white to-sky-50 px-4 py-8">
               <ProductCarousel />
+              </div>
               <BlogPage />
+              <Numbers />
               <TestimonialSection />
-              <Contact />
             </>
           }
         />
-
         {/* FULL PAGE ROUTES */}
         <Route path="/careers-page" element={<Careers />} />
         <Route path="/b2b" element={<B2BPage />} />
-
       </Routes>
+      <Contact />
     </>
   );
 }

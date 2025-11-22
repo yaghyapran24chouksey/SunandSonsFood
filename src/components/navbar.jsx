@@ -12,7 +12,7 @@ export default function Navbar() {
 
       {/* FLOATING WHATSAPP BUTTON */}
       <a
-        href="https://wa.me/919826148488"
+        href="https://wa.me/919770526057"
         target="_blank"
         className="fixed right-20 top-6 bg-green-500 text-white p-4 rounded-full shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 z-50"
       >
@@ -31,8 +31,7 @@ export default function Navbar() {
 
       {/* DESKTOP MENU */}
       <div className="hidden md:flex justify-center">
-        <div className="rounded-full px-12 py-4 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 
-          border border-white/40 shadow-xl flex items-center gap-14 text-white backdrop-blur-md">
+        <div className="rounded-full px-12 py-4 bg-[#003B8E] border border-white/40 shadow-xl flex items-center gap-14 text-white backdrop-blur-md">
 
           <ul className="flex items-center gap-12">
 

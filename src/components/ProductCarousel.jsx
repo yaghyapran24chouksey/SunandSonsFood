@@ -1,165 +1,324 @@
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
-const slidesData = [
-  {
-    img: "/img/Carouselimg1.png",
-    author: "LUNDEV",
-    title: "DESIGN SLIDER",
-    topic: "ANIMAL",
-    des:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut sequi rem magnam nesciunt minima placeat...",
-  },
-  {
-    img: "/img/Carouselimg2.png",
-    author: "LUNDEV",
-    title: "DESIGN SLIDER",
-    topic: "NATURE",
-    des:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut sequi rem magnam nesciunt minima placeat...",
-  },
-  {
-    img: "/img/Carouselimg3.png",
-    author: "LUNDEV",
-    title: "DESIGN SLIDER",
-    topic: "WILDLIFE",
-    des:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut sequi rem magnam nesciunt minima placeat...",
-  },
-  {
-    img: "/img/Carouselimg2.png",
-    author: "LUNDEV",
-    title: "DESIGN SLIDER",
-    topic: "SEA",
-    des:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut sequi rem magnam nesciunt minima placeat...",
-  },
+const IMAGES = [
+  "/img/Wheypowder.png",
+  "/img/Wheypowder(1).png",
+  "/img/Wheypowder(3).jpg",
+  "/img/Wheypowder(4).jpg",
+  "/img/Wheypowder(5).jpg",
+  "/img/Wheypowder(6).jpg",
+  "/img/Wheypowder(7).jpg",
+  "/img/Wheypowder(8).jpg",
+  "/img/Wheypowder(9).jpg",
+  "/img/Wheypowder(10).jpg",
 ];
 
-export default function CarouselA() {
-  const [slides, setSlides] = useState(slidesData);
-  const [direction, setDirection] = useState(0);
+const AUTOPLAY_MS = 2500;
 
-  const timeoutRef = useRef(null);
+const ProductCarousel = () => {
+  const wrapRef = useRef(null);
+  const carouselRef = useRef(null);
+  const cardRefs = useRef([]);
+
+  const origCount = IMAGES.length;
+
+  // Build 3× list: reversed originals + originals + originals
+  const cardsData = useMemo(() => {
+    const originals = IMAGES.map((src, origIndex) => ({
+      src,
+      origIndex,
+    }));
+    const prefix = [...originals].reverse().map((c) => ({
+      ...c,
+      clone: true,
+    }));
+    const suffix = originals.map((c) => ({ ...c, clone: true }));
+    return [...prefix, ...originals, ...suffix];
+  }, []);
+
+  const [currentAbs, setCurrentAbs] = useState(
+    origCount + Math.floor(origCount / 2)
+  );
+  const [offsetX, setOffsetX] = useState(0);
+  const [instant, setInstant] = useState(true);
+
+  const autoplayRef = useRef(null);
+  const touchStartXRef = useRef(0);
+
+  const totalCards = cardsData.length;
+  const middleStart = origCount; // start of middle block
+
+  // Center active card by measuring its offset
+  const recenter = useCallback(() => {
+    const wrap = wrapRef.current;
+    const activeCard = cardRefs.current[currentAbs];
+
+    if (!wrap || !activeCard) return;
+
+    const containerWidth = wrap.clientWidth;
+    const offset =
+      activeCard.offsetLeft - (containerWidth / 2 - activeCard.clientWidth / 2);
+
+    setOffsetX(offset);
+  }, [currentAbs]);
+
+  // Recenter on index change
+  useLayoutEffect(() => {
+    recenter();
+  }, [currentAbs, recenter]);
+
+  // Recenter on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setInstant(true);
+      recenter();
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [recenter]);
+
+  // Infinite loop fix after transitions end
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    const handleTransitionEnd = () => {
+      setCurrentAbs((prev) => {
+        let next = prev;
+        let changed = false;
+
+        if (next >= origCount * 2) {
+          next = next - origCount;
+          changed = true;
+        } else if (next < origCount) {
+          next = next + origCount;
+          changed = true;
+        }
+
+        if (changed) {
+          setInstant(true);
+          // recenter will run because index changes
+        }
+        return next;
+      });
+    };
+
+    el.addEventListener("transitionend", handleTransitionEnd);
+    return () => el.removeEventListener("transitionend", handleTransitionEnd);
+  }, [origCount]);
+
+  // Helper: move by delta
+  const goToOffset = useCallback((delta) => {
+    setInstant(false);
+    setCurrentAbs((prev) => prev + delta);
+  }, []);
+
+  // Helper: go to middle copy of original index
+  const goToOriginal = useCallback(
+    (origIndex) => {
+      setInstant(false);
+      setCurrentAbs(middleStart + origIndex);
+    },
+    [middleStart]
+  );
+
+  // Keyboard arrows
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "ArrowLeft") {
+        goToOffset(-1);
+        restartAutoplay();
+      }
+      if (e.key === "ArrowRight") {
+        goToOffset(1);
+        restartAutoplay();
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [goToOffset]);
+
+  // Autoplay
+  const startAutoplay = useCallback(() => {
+    if (autoplayRef.current) return;
+    autoplayRef.current = setInterval(() => {
+      goToOffset(1);
+    }, AUTOPLAY_MS);
+  }, [goToOffset]);
+
+  const stopAutoplay = useCallback(() => {
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
+    }
+  }, []);
+
+  const restartAutoplay = useCallback(() => {
+    stopAutoplay();
+    startAutoplay();
+  }, [startAutoplay, stopAutoplay]);
 
   useEffect(() => {
-    startAuto();
-    return () => clearTimeout(timeoutRef.current);
-  }, [slides]);
+    startAutoplay();
+    return () => stopAutoplay();
+  }, [startAutoplay, stopAutoplay]);
 
-  function startAuto() {
-    clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      handleNext();
-    }, 5500);
-  }
+  // Touch swipe
+  const handleTouchStart = (e) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
 
-  function handleNext() {
-    setDirection(1);
-    setSlides((prev) => {
-      const first = prev[0];
-      return [...prev.slice(1), first];
-    });
-  }
+  const handleTouchEnd = (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartXRef.current;
+    if (dx > 40) {
+      goToOffset(-1);
+      restartAutoplay();
+    } else if (dx < -40) {
+      goToOffset(1);
+      restartAutoplay();
+    }
+  };
 
-  function handlePrev() {
-    setDirection(-1);
-    setSlides((prev) => {
-      const last = prev[prev.length - 1];
-      return [last, ...prev.slice(0, -1)];
-    });
-  }
+  // Card variant styles (active / adjacent / inactive)
+  const getCardStyleAndClass = (idx) => {
+    const baseStyle = {
+      backfaceVisibility: "hidden",
+      transformOrigin: "center center",
+      transition:
+        "transform .45s cubic-bezier(.22,.9,.3,1), filter .35s, opacity .35s, box-shadow .35s",
+    };
 
-  const variants = {
-    enter: (direction) => ({
-      opacity: 0,
-      scale: direction === 1 ? 1.1 : 0.9,
-      x: direction === 1 ? 200 : -200,
-    }),
-    center: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-    },
-    exit: (direction) => ({
-      opacity: 0,
-      x: direction === 1 ? -200 : 200,
-      scale: direction === 1 ? 0.9 : 1.1,
-    }),
+    const leftIdx = currentAbs - 1;
+    const rightIdx = currentAbs + 1;
+
+    // inactive
+    let style = {
+      ...baseStyle,
+      transform: "scale(0.70) translateY(18px)",
+      filter: "brightness(.9) blur(3px)",
+      opacity: 0.45,
+      boxShadow: "0 6px 18px rgba(9,20,30,0.04)",
+      zIndex: 1,
+    };
+    let extraClass = "";
+
+    if (idx === currentAbs) {
+      // active
+      style = {
+        ...baseStyle,
+        transform: "scale(1.14) translateY(-12px)",
+        filter: "none",
+        opacity: 1,
+        boxShadow: "0 28px 60px rgba(11,28,45,0.18)",
+        zIndex: 5,
+      };
+      extraClass = "card-active";
+    } else if (idx === leftIdx) {
+      // adj-left
+      style = {
+        ...baseStyle,
+        transform: "scale(0.92) translateY(6px) rotateY(10deg) translateX(-8px)",
+        filter: "brightness(.95) blur(0.6px)",
+        opacity: 0.85,
+        boxShadow: "0 8px 20px rgba(8,20,30,0.06)",
+        zIndex: 3,
+      };
+      extraClass = "card-adj-left";
+    } else if (idx === rightIdx) {
+      // adj-right
+      style = {
+        ...baseStyle,
+        transform: "scale(0.92) translateY(6px) rotateY(-10deg) translateX(8px)",
+        filter: "brightness(.95) blur(0.6px)",
+        opacity: 0.85,
+        boxShadow: "0 8px 20px rgba(8,20,30,0.06)",
+        zIndex: 3,
+      };
+      extraClass = "card-adj-right";
+    }
+
+    return { style, extraClass };
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-black text-white">
-      <AnimatePresence custom={direction}>
-        <motion.div
-          key={slides[0].img}
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.7 }}
-          className="absolute inset-0"
-        >
-          <img
-            src={slides[0].img}
-            className="w-full h-full object-cover absolute inset-0"
-          />
-
-          <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80%] max-w-[1140px] text-white">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.7 }}
-              className="tracking-[12px] font-bold"
+    <section
+      ref={wrapRef}
+      className="relative overflow-visible py-4 pb-9 select-none"
+    >
+      {/* Carousel track */}
+      <div
+        ref={carouselRef}
+        className="flex items-center gap-[22px] py-4"
+        style={{
+          transform: `translateX(-${offsetX}px)`,
+          transition: instant
+            ? "none"
+            : "transform .5s cubic-bezier(.22,.9,.3,1)",
+          willChange: "transform",
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {cardsData.map((card, idx) => {
+          const { style, extraClass } = getCardStyleAndClass(idx);
+          return (
+            <article
+              key={`${card.origIndex}-${idx}`}
+              ref={(el) => (cardRefs.current[idx] = el)}
+              className={`relative block h-[380px] w-[260px] flex-shrink-0 overflow-hidden rounded-[14px] bg-white ${extraClass}
+              shadow-[0_8px_20px_rgba(8,20,30,0.06)]`}
+              style={style}
+              onClick={() => {
+                goToOriginal(card.origIndex);
+                restartAutoplay();
+              }}
             >
-              {slides[0].author}
-            </motion.div>
+              <img
+                src={card.src}
+                alt=""
+                className="h-full w-full object-cover pointer-events-none"
+                draggable="false"
+              />
+            </article>
+          );
+        })}
+      </div>
 
-            <motion.div
-              className="text-6xl font-bold"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55, duration: 0.7 }}
-            >
-              {slides[0].title}
-            </motion.div>
-
-            <motion.div
-              className="text-6xl font-bold text-orange-500"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.7 }}
-            >
-              {slides[0].topic}
-            </motion.div>
-
-            <motion.div
-              className="max-w-[60%] mt-6"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.7 }}
-            >
-              {slides[0].des}
-            </motion.div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-
-      <div className="absolute top-[80%] left-1/2 -translate-x-1/2 flex gap-3 z-20">
+      {/* Controls (centered) */}
+      <div className="mt-3 flex items-center justify-center gap-4">
         <button
-          onClick={handlePrev}
-          className="w-10 h-10 bg-white/30 rounded-full hover:bg-white hover:text-black transition"
+          type="button"
+          aria-label="Previous"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-xl text-slate-800 shadow-[0_8px_20px_rgba(8,20,30,0.08)] transition-transform duration-150 hover:scale-[1.04]"
+          onClick={() => {
+            goToOffset(-1);
+            restartAutoplay();
+          }}
         >
-          &lt;
+          ‹
         </button>
         <button
-          onClick={handleNext}
-          className="w-10 h-10 bg-white/30 rounded-full hover:bg-white hover:text-black transition"
+          type="button"
+          aria-label="Next"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-xl text-slate-800 shadow-[0_8px_20px_rgba(8,20,30,0.08)] transition-transform duration-150 hover:scale-[1.04]"
+          onClick={() => {
+            goToOffset(1);
+            restartAutoplay();
+          }}
         >
-          &gt;
+          ›
         </button>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default ProductCarousel;
