@@ -25,7 +25,7 @@ export default function Navbar() {
         <img
           src="/SunandSons_Foods_Logo_JPG_01.png"
           alt="Logo"
-          className="w-36 md:w-60 object-contain drop-shadow-lg"
+          className="w-36 md:w-60 object-contain drop-shadow-lg hover:scale-115 transition"
         />
       </div>
 

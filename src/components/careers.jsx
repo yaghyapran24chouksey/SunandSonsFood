@@ -6,17 +6,17 @@ export default function Careers() {
     <div className="font-sans">
 
       {/* HERO SECTION */}
-      <section className="px-[150px] py-[60px]">
+      {/* <section className="px-[150px] py-[60px]">
+        
+      </section> */}
+
+      {/* CONTENT SECTION */}
+      <section className="px-[150px] py-[185px] text-[#003E8B]">
         <div className="flex justify-between items-center">
           <h1 className="text-[48px] font-bold text-[#003E8B] font-clover">
             Careers
           </h1>
         </div>
-      </section>
-
-      {/* CONTENT SECTION */}
-      <section className="px-[150px] py-[60px] text-[#003E8B]">
-
         <h3 className="text-[22px] font-bold mt-10 font-poppins">
           Work with The Happy Makers
         </h3>

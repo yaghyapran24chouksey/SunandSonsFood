@@ -10,7 +10,7 @@ const Hero = () => {
       {/* Background Image (ON TOP of the logo) */}
       <div className="absolute inset-0 z-20 pointer-events-none mt-70">
         <img
-          src="/img/logo_up_backdground1.jpeg"
+          src="/img/logo_up_background1.png"
           alt="Background"
           className="w-full h-full object-cover object-bottom"
         />

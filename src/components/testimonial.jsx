@@ -2,56 +2,69 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Abhimanyu Singh",
+    name: "Rajesh Kumar",
     review:
       "Really happy with the quality of the skimmed milk powder. Packaging is neat, delivery is fast, and service is friendly. Definitely a trusted supplier!",
   },
   {
-    name: "Jayant Pawar",
+    name: "Deepak patel",
     review:
       "मैं पिछले एक साल से Whey powder इन्हीं से ले रहा हूँ। प्रोडक्ट की क्वालिटी और पैकिंग दोनों ही बेहतरीन हैं। डिलीवरी समय पर मिल जाती है।",
   },
   {
-    name: "Priya Nair",
+    name: "Rajendra Yadav",
     review:
-      "Loved the freshness and texture! Highly recommended for health-conscious families.",
-    // image: "/img/user3.jpg",
+      "This company has become our go-to supplier for bulk SMP orders. Deliveries are always on schedule, packaging is secure, and the quality is outstanding every time.",
   },
   {
     name: "Amit Patel",
     review:
-      "High quality & great taste! I always order Sun & Sons products for my family.",
-    // image: "/img/user4.jpg",
+      "We use their skimmed milk powder in bakery and confectionery products. The texture and solubility are excellent, giving us consistently good results.",
   },
   {
-    name: "Sneha Gupta",
+    name: "Surendra Yadav",
     review:
-      "The best in the market. Super fast delivery and perfect freshness!",
-    // image: "/img/user5.jpg",
+      "Impressed with the fast turnaround times and customer service. They handled our urgent order smoothly and delivered earlier than expected.",
   },
   {
     name: "Vikas Yadav",
     review:
-      "Premium products with great packaging. Worth every rupee!",
-    // image: "/img/user6.jpg",
+      "We’ve been sourcing skimmed milk powder from this supplier for over a year, and the quality has always been consistent. The powder dissolves well, has a clean taste, and works perfectly in our production line. Highly recommended!",
   },
   {
-    name: "Meera Joshi",
+    name: "Govind Jaat",
     review:
-      "My kids love their almonds! Clean, fresh and tasty.",
-    // image: "/img/user7.jpg",
+      "इस सप्लायर का व्हे पर्मिएट पाउडर गुणवत्ता में बहुत अच्छी है — घुलनशीलता (solubility) बहुत बढ़िया और बैच बहुत कन्सिस्टेंट था।",
   },
   {
     name: "Sandeep Kumar",
     review:
-      "Highly trustworthy brand. Recommend for everyone!",
-    // image: "/img/user8.jpg",
+      "Whey Permeate Powder has a long shelf life (up to 18 months in 25 kg bags) when stored properly. That’s very good for industrial buyers.",
   },
   {
-    name: "Kritika Sharma",
+    name: "Ravi shankar yadav",
     review:
-      "These products are part of our daily diet now! Absolutely amazing.",
-    // image: "/img/user9.jpg",
+      "बहुत संतुष्ट हूँ Sun & Sons Company से हुई डील से — छोटे बैच ऑर्डर पर भी तुरंत प्रतिसाद मिला, पैकिंग अच्छी थी। अगर आप स्किम्ड मिल्क पाउडर डीलर खोज रहे हैं, तो यह एक भरोसेमंद विकल्प है।",
+  },
+  {
+    name: "Deepak Yadav",
+    review:
+      "डीलर का ग्राहक सेवा अनुभव बहुत अच्छा रहा — उन्होंने ऑर्डर के बाद फॉलोअप किया और भुगतान-प्रक्रिया सरल और स्पष्ट थी।",
+  },
+  {
+    name: "Ravi Kumar",
+    review:
+      "मध्य प्रदेश के स्तर पर थोक सप्लायर के रूप में Sun & Sons ने उचित प्राइस पर अच्छा माल दिया। स्किम्ड मिल्क पाउडर का लेबल सही था, फेट की मात्रा कम थी जैसा वादा था। समय से डिलीवरी हुई!",
+  },
+  {
+    name: "Rajesh Singh",
+    review:
+      "यह डीलर बहुत भरोसेमंद है — ऑर्डर हमेशा समय पर डिलीवर होता है और तेल की क्वालिटी स्थिर रहती है।",
+  },
+  {
+    name: "Ajay Rathod",
+    review:
+      "ह डीलर लैक्टोज पाउडर की क्वालिटी बहुत अच्छी देता है — सफेद, फाइन ग्रेन्युलर पाउडर और बहुत अच्छी घुलनशीलता।",
   },
 ];
 
@@ -75,7 +88,7 @@ const SmallTestimonial = () => {
           animate={{ x: ["0%", "-50%"] }}
           transition={{
             repeat: Infinity,
-            duration: 20,
+            duration: 10,
             ease: "linear",
           }}
         >
