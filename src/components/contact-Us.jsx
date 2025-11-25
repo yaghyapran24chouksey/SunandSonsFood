@@ -3,7 +3,7 @@ import { FaInstagram, FaFacebook, FaLinkedin, FaWhatsapp } from "react-icons/fa"
 
 const Footer = () => {
   return (
-    <footer id="contactus-page" className="bg-blue-900 text-white pt-10 pb-6">
+    <footer className="bg-blue-900 text-white pt-10 pb-6">
       <div className="container mx-auto px-6 grid md:grid-cols-3">
 
         {/* Logo */}
@@ -25,7 +25,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-yellow-500">Quick Links</h4>
             <ul className="space-y-2 text-[#003B8E]">
-              <li><a href="#home-page" className="hover:text-yellow-400 transition">Home</a></li>
+              <li><Link to="/herosection" className="hover:text-yellow-400 transition">Home</Link></li>
               <li><Link to="/careers-page" className="hover:text-yellow-400 transition">Careers</Link></li>
               <li><Link to="/b2b" className="hover:text-yellow-400 transition">B2B Enquiry</Link></li>
             </ul>

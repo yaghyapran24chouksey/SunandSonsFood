@@ -27,7 +27,7 @@ export default function BlogPage() {
     }
 
     return (
-        <div id="blog-page" className="flex flex-wrap gap-10 justify-center py-16">
+        <div className="flex flex-wrap gap-10 justify-center py-16">
             {blogs
                 ?.filter(blog => blog && blog.title && blog.image && blog.link)
                 .map((blog, idx) => (

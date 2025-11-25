@@ -12,7 +12,7 @@ export default function Navbar() {
 
       {/* FLOATING WHATSAPP BUTTON */}
       <a
-        href="https://wa.me/919770526057"
+        href="https://wa.me/919770526057?text=Hi%21%20I%20am%20interested%20in%20ordering%20your%20food%20products.%20Can%20you%20share%20price%20details%3F"
         target="_blank"
         className="fixed right-20 top-6 bg-green-500 text-white p-4 rounded-full shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 z-50"
       >
@@ -22,11 +22,13 @@ export default function Navbar() {
       {/* LEFT LOGO */}
       <div className="absolute left-[40px] top-[-70px] flex items-center">
         <div className="absolute w-48 h-48 rounded-full"></div>
-        <img
-          src="/SunandSons_Foods_Logo_JPG_01.png"
-          alt="Logo"
-          className="w-36 md:w-60 object-contain drop-shadow-lg hover:scale-115 transition"
-        />
+        <Link to="/">
+          <img
+            src="/SunandSons_Foods_Logo_JPG_01.png"
+            alt="Logo"
+            className="w-36 md:w-60 object-contain drop-shadow-lg hover:scale-115 transition"
+          />
+        </Link>
       </div>
 
       {/* DESKTOP MENU */}
@@ -36,39 +38,22 @@ export default function Navbar() {
           <ul className="flex items-center gap-12">
 
             {/* HOME → scroll */}
-            <li><a href="#home-page" className="nav-item">Home</a></li>
+            <li><Link to="/herosection" className="nav-item">Home</Link></li>
 
             {/* ABOUT → scroll */}
-            <li><a href="#about-page" className="nav-item">About</a></li>
+            <li><Link to="/about" className="nav-item">About</Link></li>
 
             {/* PRODUCT DROPDOWN → real pages */}
-            <li className="relative">
-              <button
-                onClick={() => setOpenDropdown(!openDropdown)}
-                className="nav-item flex items-center gap-1"
-              >
-                Product
-                <ChevronDown size={14} />
-              </button>
-
-              {openDropdown && (
-                <div className="absolute left-0 top-8 bg-white shadow-xl rounded-xl p-3 w-40">
-                  <Link to="/products/seeds" className="dropdown-item">Seeds</Link>
-                  <Link to="/products/snacks" className="dropdown-item">Snacks</Link>
-                  <Link to="/products/oils" className="dropdown-item">Oils</Link>
-                  <Link to="/products/dry-fruits" className="dropdown-item">Dry Fruits</Link>
-                </div>
-              )}
-            </li>
+            <li><Link to="/productCarousel" className="nav-item">Product</Link></li>
 
             {/* CAREERS → scroll */}
-            <li><a href="#blog-page" className="nav-item">Blog</a></li>
+            <li><Link to="/BlogPage" className="nav-item">Blogs</Link></li>
 
             {/* B2B → scroll */}
-            <li><a href="#testimonial-page" className="nav-item">Testimonials</a></li>
+            <li><Link to="/testimonial" className="nav-item">Testimonial</Link></li>
 
             {/* CONTACT → scroll */}
-            <li><a href="#contactus-page" className="nav-item">Contact Us</a></li>
+            <li><Link to="/contact-Us" className="nav-item">Contact us</Link></li>
 
           </ul>
 
