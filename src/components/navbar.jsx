@@ -11,22 +11,30 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 w-full bg-white shadow-sm py-4 z-50">
 
       {/* FLOATING WHATSAPP BUTTON */}
+      {/* WHATSAPP BUTTON (Responsive) */}
       <a
-        href="https://wa.me/919770526057?text=Hi%21%20I%20am%20interested%20in%20ordering%20your%20food%20products.%20Can%20you%20share%20price%20details%3F"
+        href="https://wa.me/919770526057?text=Hi!%20I'm%20interested%20in%20your%20products."
         target="_blank"
-        className="fixed right-20 top-6 bg-green-500 text-white p-4 rounded-full shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 z-50"
+        className="
+    fixed z-[100] text-white p-4 rounded-full shadow-xl hover:scale-110 duration-300
+
+    bg-green-500
+
+    bottom-5 right-5       /* Mobile Position */
+    md:bottom-auto md:top-6 md:right-20   /* Desktop Position */
+  "
       >
         <FaWhatsapp size={24} />
       </a>
 
       {/* LEFT LOGO */}
-      <div className="absolute left-[40px] top-[-70px] flex items-center">
+      <div className="absolute left-[20px] top-[-65px] flex items-center">
         <div className="absolute w-48 h-48 rounded-full"></div>
         <Link to="/">
           <img
             src="/SunandSons_Foods_Logo_JPG_01.png"
             alt="Logo"
-            className="w-36 md:w-60 object-contain drop-shadow-lg hover:scale-115 transition"
+            className="w-45 md:w-60 object-contain drop-shadow-lg hover:scale-115 transition"
           />
         </Link>
       </div>
@@ -38,7 +46,7 @@ export default function Navbar() {
           <ul className="flex items-center gap-12">
 
             {/* HOME → scroll */}
-            <li><Link to="/herosection" className="nav-item">Home</Link></li>
+            {/* <li><Link to="/herosection" className="nav-item">Home</Link></li> */}
 
             {/* ABOUT → scroll */}
             <li><Link to="/about" className="nav-item">About</Link></li>
@@ -47,13 +55,24 @@ export default function Navbar() {
             <li><Link to="/productCarousel" className="nav-item">Product</Link></li>
 
             {/* CAREERS → scroll */}
-            <li><Link to="/BlogPage" className="nav-item">Blogs</Link></li>
+            <li><Link to="/blogPage" className="nav-item">Blogs</Link></li>
 
             {/* B2B → scroll */}
             <li><Link to="/testimonial" className="nav-item">Testimonial</Link></li>
 
             {/* CONTACT → scroll */}
-            <li><Link to="/contact-Us" className="nav-item">Contact us</Link></li>
+            <li>
+              <button
+                onClick={() => {
+                  document.getElementById("contact-section").scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }}
+                className="nav-item"
+              >
+                Contact Us
+              </button>
+            </li>
 
           </ul>
 
@@ -71,28 +90,23 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden mt-4 bg-white/70 backdrop-blur-md shadow-lg rounded-xl mx-4 p-4">
 
-          <a href="#home-page" className="mobile-item">Home</a>
-          <a href="#about-page" className="mobile-item">About</a>
-
-          <button
-            className="mobile-item flex justify-between w-full"
-            onClick={() => setOpenDropdown(!openDropdown)}
-          >
-            Product <ChevronDown size={16} />
-          </button>
-
-          {openDropdown && (
-            <div className="ml-4 space-y-2">
-              <Link to="/products/seeds" className="dropdown-mobile">Seeds</Link>
-              <Link to="/products/snacks" className="dropdown-mobile">Snacks</Link>
-              <Link to="/products/oils" className="dropdown-mobile">Oils</Link>
-              <Link to="/products/dry-fruits" className="dropdown-mobile">Dry Fruits</Link>
-            </div>
-          )}
-
-          <a href="#blog-page" className="mobile-item">Blogs</a>
-          <a href="#testimonial-page" className="mobile-item">Testimonials</a>
-          <a href="#contactus-page" className="mobile-item">Contact Us</a>
+          {/* <a href="#home-page" className="mobile-item">Home</a> */}
+          <li><Link to="/about" className="mobile-item">About</Link></li>
+          <li><Link to="/productCarousel" className="mobile-item">Product</Link></li>
+          <li><Link to="/blogPage" className="mobile-item">Blogs</Link></li>
+          <li><Link to="/testimonial" className="mobile-item">Testimonial</Link></li>
+          <li>
+            <button
+              onClick={() => {
+                document.getElementById("contact-section").scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+              className="mobile-item"
+            >
+              Contact Us
+            </button>
+          </li>
 
         </div>
       )}

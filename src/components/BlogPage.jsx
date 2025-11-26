@@ -1,39 +1,42 @@
 import { useState, useEffect } from "react";
-import BlogCard from "../components/BlogCard";
+import BlogCard from "./BlogCard";
+import { BLOG_API } from "../config/blogApi";
 
 export default function BlogPage() {
-    const [blogs, setBlogs] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const API_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgJEUHG3xsp5TixHprG3YZXsngwEOa0B4aGrkpKYcx0HzQrC1i2lPwnbOGC6bwq_H-NY8w3HqmA1GWu9LEskE_5an9LgxXNQ5O2A6y3VyJ43J_4myRWGWBuhcVRA5mhVHzb6W8z29LHPJkiDtpFhB97862r2HtGuLQEEMpSwGWZhHGop4uZkpCo5FHyNUhR-obKuvq80s_jHtpCtSFQn8y60D9pUOeWKHJFdTkpW0wP-OYPJXoB0Bs_nlitvlUhhyvPQYQ8_JQfwqWUFSgTybb4qkUyypRXaTNBzNwu&lib=MT1fAD_d6theg03qYNC2TnS0cRxA0As0W";
+  useEffect(() => {
+    async function load() {
+      const res = await fetch(BLOG_API);
+      let data = await res.json();
 
-    useEffect(() => {
-        async function loadBlogs() {
-            try {
-                const res = await fetch(API_URL);
-                const data = await res.json();
-                setBlogs(data);
-            } catch (err) {
-                console.error("Failed to load blogs", err);
-            }
-            setLoading(false);
-        }
+      // generate id if missing
+      data = data.map((b, i) => ({ id: b.id || i + 1, ...b }));
 
-        loadBlogs();
-    }, []);
-
-    if (loading) {
-        return <div className="text-center py-20 text-xl">Loading blogs...</div>;
+      setBlogs(data);
+      setLoading(false);
     }
+    load();
+  }, []);
 
-    return (
-        <div className="flex flex-wrap gap-10 justify-center py-16">
-            {blogs
-                ?.filter(blog => blog && blog.title && blog.image && blog.link)
-                .map((blog, idx) => (
-                    <BlogCard blog={blog} key={idx} />
-                ))
-            }
-        </div>
-    );
+  if (loading) return <div className="text-center py-20 text-xl mt-20">Loading blogs...</div>;
+
+  return (
+    <>
+      {/* SHOW ONLY FIRST 3 BLOGS */}
+      <div className="flex flex-wrap gap-10 justify-center py-16">
+        {blogs.slice(0, 3).map(blog => (
+          <BlogCard blog={blog} key={blog.id} />
+        ))}
+      </div>
+
+      {/* MORE BLOGS BUTTON */}
+      <div className="w-full flex justify-center mb-10">
+        <a href="/blogs" className="px-6 py-3 bg-blue-700 text-white rounded-md hover:bg-blue-900">
+          More Blogs 
+        </a>
+      </div>
+    </>
+  );
 }

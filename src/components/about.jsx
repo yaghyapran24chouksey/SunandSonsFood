@@ -9,7 +9,7 @@ const About = () => {
       <section className="bg-white text-blue-900">
 
         {/* ================= Section 1: Vision ================= */}
-        <div className="bg-[#E6F2FF] w-full max-w-7xl mt-20 mb-20 rounded-3xl shadow-xl mx-auto 
+        <div className="bg-[#E6F2FF] w-full max-w-7xl mt-40 mb-20 rounded-3xl shadow-xl mx-auto 
      px-6 sm:px-10 md:px-30 py-12 md:py-20 
      flex flex-col md:flex-row items-center justify-center gap-10 md:gap-12">
 

@@ -74,7 +74,7 @@ const doubledTestimonials = [...testimonials, ...testimonials];
 const SmallTestimonial = () => {
   return (
     <section id="testimonial-page" className="bg-gradient-to-b from-white to-blue-50 py-16">
-      <div className="container mx-auto px-6 text-center overflow-hidden">
+      <div className="container mx-auto px-6 text-center overflow-hidden mt-30">
         <h2 className="text-3xl font-bold text-blue-900 mb-4">
           What Our Customers Say
         </h2>
