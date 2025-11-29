@@ -2,7 +2,7 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 
-const About = () => {
+const cocoapowder = () => {
   return (
     <>
       <section className="bg-white text-blue-900">
@@ -60,4 +60,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default cocoapowder;

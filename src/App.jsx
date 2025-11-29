@@ -13,6 +13,17 @@ import ProductCarousel from "./components/productCarousel";
 import AllBlogs from "./components/AllBlogs";
 import SingleBlog from "./components/SingleBlog";
 import ScrollToTop from "./ScrollToTop";
+import CocoaPowder from "./product/cocoapowder";
+import DairyWhitner from "./product/dairywhitner";
+import WheyProteinConcentrated from "./product/wheyproteinconcentrated";
+import WholeMilkPowder from "./product/wholemilkpowder";
+import SkimmedMilkPowderCow from "./product/skimmedmilkpowdercow";
+import SkimmedMilkPowderBuffalo from "./product/skimmedmilkpowderbuffalo";
+import WheyPowder from "./product/wheypowder";
+import WheyPermeatePowder from "./product/wheypermeatepowder";
+import Lectose from "./product/lectose";
+import CookingOil from "./product/cookingoil";
+import PeanuteButter from "./product/peanutebutter";
 
 function App() {
   return (
@@ -44,7 +55,18 @@ function App() {
         <Route path="/productCarousel" element={<ProductCarousel />} />
         <Route path="/blogpage" element={<BlogPage />} /> {/* use lowercase path */}
         <Route path="/blogs" element={<AllBlogs />} />
-  <Route path="/blog/:id" element={<SingleBlog />} />
+        <Route path="/blog/:id" element={<SingleBlog />} />
+        <Route path="/product/cocoapowder" element={<CocoaPowder />} />
+        <Route path="/product/dairywhitner" element={<DairyWhitner />} />
+        <Route path="/product/wheyproteinconcentrated" element={<WheyProteinConcentrated />} />
+        <Route path="/product/wholemilkpowder" element={<WholeMilkPowder />} />
+        <Route path="/product/skimmedmilkpowdercow" element={<SkimmedMilkPowderCow />} />
+        <Route path="/product/skimmedmilkpowderbuffalo" element={<SkimmedMilkPowderBuffalo />} />
+        <Route path="/product/wheypowder" element={<WheyPowder />} />
+        <Route path="/product/wheypermeatepowder" element={<WheyPermeatePowder />} />
+        <Route path="/product/lectose" element={<Lectose />} />
+        <Route path="/product/cookingoil" element={<CookingOil />} />
+        <Route path="/product/peanutebutter" element={<PeanuteButter />} />
         {/* FULL PAGE ROUTES */}
         <Route path="/careers-page" element={<Careers />} />
         <Route path="/b2b" element={<B2BPage />} />

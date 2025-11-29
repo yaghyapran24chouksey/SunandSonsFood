@@ -10,19 +10,20 @@ import { Link } from "react-router-dom";
 
 // 🔥 Images + Product Page Links
 const IMAGES = [
-  { src: "/img/Wheypowder.png", link: "/product/whey-1" },
-  { src: "/img/Wheypowder(1).png", link: "/product/whey-2" },
-  { src: "/img/Wheypowder(3).jpg", link: "/product/whey-3" },
-  { src: "/img/Wheypowder(4).jpg", link: "/product/whey-4" },
-  { src: "/img/Wheypowder(5).jpg", link: "/product/whey-5" },
-  { src: "/img/Wheypowder(6).jpg", link: "/product/whey-6" },
-  { src: "/img/Wheypowder(7).jpg", link: "/product/whey-7" },
-  { src: "/img/Wheypowder(8).jpg", link: "/product/whey-8" },
-  { src: "/img/Wheypowder(9).jpg", link: "/product/whey-9" },
-  { src: "/img/Wheypowder(10).jpg", link: "/product/whey-10" },
+  { src: "/img/Wheypowder.png", link: "/product/skimmedmilkpowdercow" },
+  { src: "/img/Wheypowder(1).png", link: "/product/skimmedmilkpowderbuffalo" },
+  { src: "/img/Wheypowder(3).jpg", link: "/product/wheypowder" },
+  { src: "/img/Wheypowder(4).jpg", link: "/product/wheypermeatepowder" },
+  { src: "/img/Wheypowder(5).jpg", link: "/product/lectose" },
+  { src: "/img/Wheypowder(6).jpg", link: "/product/dairywhitner" },
+  { src: "/img/Wheypowder(7).jpg", link: "/product/wholemilkpowder" },
+  { src: "/img/Wheypowder(8).jpg", link: "/product/cocoapowder" },
+  { src: "/img/Wheypowder(9).jpg", link: "/product/wheyproteinconcentrated" },
+  { src: "/img/Wheypowder(10).jpg", link: "/product/peanutebutter" },
+  { src: "/img/Wheypowder(10).jpg", link: "/product/cookingoil" },
 ];
 
-const AUTOPLAY_MS = 2500;
+const AUTOPLAY_MS = 3500;
 
 const ProductCarousel = () => {
   const wrapRef = useRef(null);
